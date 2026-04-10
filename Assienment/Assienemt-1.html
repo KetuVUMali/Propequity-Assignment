@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Makaan | Find Your Dream Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00B98E;
+            --secondary: #FF6922;
+            --light: #EFFDF5;
+            --dark: #0E2E50;
+        }
+
+        body {
+            font-family: "Heebo", sans-serif;
+            color: #666;
+            background: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand span {
+            font-family: "Inter", sans-serif;
+            color: var(--dark);
+        }
+
+        .navbar {
+            box-shadow: 0 10px 28px rgba(14, 46, 80, 0.09);
+            background: #fff;
+        }
+
+        .navbar-brand .brand-icon {
+            width: 38px;
+            height: 38px;
+            border: 1px dashed var(--primary);
+            border-radius: 50%;
+            padding: 6px;
+            background: #fff;
+        }
+
+        .navbar .nav-link {
+            color: var(--dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            --bs-btn-bg: var(--primary);
+            --bs-btn-border-color: var(--primary);
+            --bs-btn-hover-bg: #01a67f;
+            --bs-btn-hover-border-color: #01a67f;
+            --bs-btn-active-bg: #019b77;
+            --bs-btn-active-border-color: #019b77;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(95deg, rgba(14, 46, 80, 0.9) 0%, rgba(14, 46, 80, 0.6) 45%, rgba(14, 46, 80, 0.35) 100%),
+                url("img/carousel-1.jpg") center/cover no-repeat;
+            overflow: hidden;
+        }
+
+        .position-set-rent-sell{
+            text-align: center;
+            padding-top: 14px;
+
+        }
+
+        .hero .hero-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            line-height: 1.14;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 650px;
+        }
+
+        .search-panel {
+            margin-top: 26px;
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
+        }
+
+        .search-panel .form-control,
+        .search-panel .form-select {
+            border: 1px solid #e6e6e6;
+            height: 52px;
+        }
+
+        .search-panel .form-control:focus,
+        .search-panel .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(0, 185, 142, 0.16);
+        }
+
+        .segment-toggle .btn {
+            border-color: #d7d7d7;
+            color: var(--dark);
+            height: 52px;
+            font-weight: 600;
+        }
+
+        .segment-toggle .btn-check:checked + .btn {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .section-pad {
+            padding: 88px 0;
+        }
+
+        .section-title {
+            max-width: 680px;
+            margin: 0 auto 48px;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.7rem, 4vw, 2.35rem);
+        }
+
+        .property-card {
+            border: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 28px rgba(14, 46, 80, 0.08);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            height: 100%;
+            background: #fff;
+        }
+
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 22px 44px rgba(14, 46, 80, 0.15);
+        }
+
+        .property-card .media {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-card .media img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.45s ease;
+        }
+
+        .property-card:hover .media img {
+            transform: scale(1.08);
+        }
+
+        .tag-chip {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .property-price {
+            color: var(--primary);
+            font-weight: 800;
+            font-family: "Inter", sans-serif;
+        }
+
+        .property-meta {
+            font-size: 0.9rem;
+            color: #6f7782;
+        }
+
+        .property-meta i {
+            color: var(--dark);
+        }
+
+        .why-wrap {
+            background: var(--light);
+        }
+
+        .feature-box {
+            background: #fff;
+            border: 1px dashed rgba(0, 185, 142, 0.35);
+            border-radius: 14px;
+            padding: 28px 22px;
+            text-align: center;
+            height: 100%;
+            transition: all 0.35s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-6px);
+            background: var(--primary);
+            border-color: transparent;
+        }
+
+        .feature-box i {
+            width: 62px;
+            height: 62px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 185, 142, 0.12);
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            transition: all 0.35s ease;
+        }
+
+        .feature-box:hover i {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .feature-box:hover h5,
+        .feature-box:hover p {
+            color: #fff;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 10px 26px rgba(14, 46, 80, 0.08);
+            padding: 32px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--light);
+        }
+
+        .quote-icon {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .cta-box {
+            border-radius: 18px;
+            background:
+                linear-gradient(100deg, rgba(14, 46, 80, 0.94), rgba(0, 185, 142, 0.92)),
+                url("img/call-to-action.jpg") center/cover no-repeat;
+            padding: clamp(28px, 5vw, 56px);
+        }
+
+        .cta-box h2,
+        .cta-box p {
+            color: #fff;
+        }
+
+        footer {
+            background: #0a2643;
+        }
+
+        footer h5 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        footer p,
+        footer a {
+            color: rgba(255, 255, 255, 0.82);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        .social-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            transition: 0.25s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero {
+                min-height: auto;
+                padding: 110px 0 72px;
+            }
+
+            .search-panel {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="img/icon-deal.png" alt="Makaan icon" class="brand-icon">
+                <span class="fs-4 fw-bold text-primary">Makaan</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#featured">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#featured">Rent</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cta">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn btn-primary px-4 py-2" href="#">Post Property</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9">
+                    <span class="hero-subtitle">Trusted Real Estate Marketplace</span>
+                    <h1 class="mt-3 mb-3">Find Your Dream Home</h1>
+                    <p class="mb-0">Explore premium apartments, villas, and family homes in top neighborhoods with verified listings and transparent pricing.</p>
+
+                    <div class="search-panel">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" placeholder="Location (e.g. Baner, Pune)">
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="btn-group w-100 segment-toggle" role="group" aria-label="Buy or Rent">
+                                    <input type="radio" class="btn-check" name="listingType" id="buy" checked>
+                                    <label class="btn position-set-rent-sell" for="buy">Buy</label>
+                                    <input type="radio" class="btn-check" name="listingType" id="rent">
+                                    <label class="btn position-set-rent-sell" for="rent">Rent</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-select">
+                                    <option selected>Budget</option>
+                                    <option>Under INR 50 Lakh</option>
+                                    <option>INR 50 Lakh - INR 1 Cr</option>
+                                    <option>INR 1 Cr - INR 2 Cr</option>
+                                    <option>Above INR 2 Cr</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 d-grid">
+                                <button id="searchBtn" class="btn btn-primary h-100">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="featured" class="section-pad">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="mb-3">Featured Properties</h2>
+                <p class="mb-0">Handpicked homes with excellent locations, modern amenities, and value-driven pricing.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Sale</span>
+                            <img src="img/property-1.jpg" alt="Modern apartment exterior">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 95,00,000</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Wakad, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>3 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>2 Baths</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>1,520 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Rent</span>
+                            <img src="img/property-2.jpg" alt="Luxury home interior">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 42,000 / month</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Baner, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>2 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>2 Baths</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>1,080 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Sale</span>
+                            <img src="img/property-3.jpg" alt="Premium tower residential building">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 1,45,00,000</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Kharadi, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>4 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>3 Baths</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>2,180 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Rent</span>
+                            <img src="img/property-4.jpg" alt="Wide living room with daylight">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 35,000 / month</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Hinjewadi, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>2 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>1 Bath</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>980 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Sale</span>
+                            <img src="img/property-5.jpg" alt="Contemporary luxury villa">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 2,35,00,000</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Koregaon Park, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>5 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>4 Baths</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>3,400 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <article class="property-card">
+                        <div class="media">
+                            <span class="tag-chip">For Sale</span>
+                            <img src="img/property-6.jpg" alt="Family apartment with balcony">
+                        </div>
+                        <div class="p-4">
+                            <h5 class="property-price mb-2">INR 1,12,00,000</h5>
+                            <p class="mb-3"><i class="fa-solid fa-location-dot me-2"></i>Viman Nagar, Pune</p>
+                            <div class="d-flex justify-content-between property-meta">
+                                <span><i class="fa-solid fa-bed me-1"></i>3 Beds</span>
+                                <span><i class="fa-solid fa-bath me-1"></i>2 Baths</span>
+                                <span><i class="fa-solid fa-ruler-combined me-1"></i>1,620 sqft</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad why-wrap">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="mb-3">Why Choose Us</h2>
+                <p class="mb-0">From verified listings to dedicated support, we help you move faster and smarter.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="feature-box">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h5>Verified Listings</h5>
+                        <p class="mb-0">Every listing is quality checked for trust and transparency.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="feature-box">
+                        <i class="fa-solid fa-clock"></i>
+                        <h5>Fast Response</h5>
+                        <p class="mb-0">Get quick callbacks from owners and agents in your preferred area.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="feature-box">
+                        <i class="fa-solid fa-wallet"></i>
+                        <h5>Transparent Pricing</h5>
+                        <p class="mb-0">No hidden surprises, only clear budgets and informed decisions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="feature-box">
+                        <i class="fa-solid fa-headset"></i>
+                        <h5>Expert Guidance</h5>
+                        <p class="mb-0">Our property consultants support you from shortlisting to closure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="mb-3">What Clients Say</h2>
+                <p class="mb-0">Trusted by home buyers, investors, and families across the city.</p>
+            </div>
+            <div id="testimonialSlider" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#testimonialSlider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#testimonialSlider" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#testimonialSlider" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner pb-5">
+                    <div class="carousel-item active">
+                        <div class="testimonial-card text-center">
+                            <i class="fa-solid fa-quote-left quote-icon mb-3"></i>
+                            <p class="mb-4">Makaan helped us finalize our first home in less than two weeks. The listing details were accurate and the support team was truly proactive.</p>
+                            <img src="img/testimonial-1.jpg" alt="Client portrait of Neha Sharma">
+                            <h6 class="mt-3 mb-1">Neha Sharma</h6>
+                            <small class="text-muted">Software Engineer</small>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-card text-center">
+                            <i class="fa-solid fa-quote-left quote-icon mb-3"></i>
+                            <p class="mb-4">The buy-rent consultation was practical and honest. I found a great rental apartment near my office without paying unnecessary brokerage.</p>
+                            <img src="img/testimonial-2.jpg" alt="Client portrait of Rohan Verma">
+                            <h6 class="mt-3 mb-1">Rohan Verma</h6>
+                            <small class="text-muted">Product Manager</small>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-card text-center">
+                            <i class="fa-solid fa-quote-left quote-icon mb-3"></i>
+                            <p class="mb-4">As an investor, I value speed and transparency. Their team shared strong options and handled every detail professionally from visit to final deal.</p>
+                            <img src="img/testimonial-3.jpg" alt="Client portrait of Aditi Kulkarni">
+                            <h6 class="mt-3 mb-1">Aditi Kulkarni</h6>
+                            <small class="text-muted">Business Owner</small>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialSlider" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialSlider" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="pb-5">
+        <div class="container">
+            <div class="cta-box text-center text-lg-start d-lg-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-2">Ready To Move Into Your Ideal Home?</h2>
+                    <p class="mb-0">Browse curated listings that match your lifestyle, location, and budget.</p>
+                </div>
+                <a href="#featured" class="btn btn-light btn-lg fw-semibold mt-4 mt-lg-0 px-4">Explore Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5>Contact Info</h5>
+                    <p class="mb-2"><i class="fa-solid fa-location-dot me-2"></i>4th Floor, SB Road, Pune 411016</p>
+                    <p class="mb-2"><i class="fa-solid fa-phone me-2"></i>+91 98765 43210</p>
+                    <p class="mb-0"><i class="fa-solid fa-envelope me-2"></i>hello@makaanhomes.in</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Quick Links</h5>
+                    <p class="mb-2"><a href="#home">Home</a></p>
+                    <p class="mb-2"><a href="#featured">Buy Property</a></p>
+                    <p class="mb-2"><a href="#featured">Rent Property</a></p>
+                    <p class="mb-0"><a href="#cta">Sell Property</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Follow Us</h5>
+                    <p class="mb-3">Stay updated on new listings and market trends.</p>
+                    <div class="d-flex gap-2">
+                        <a class="social-link" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a class="social-link" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a class="social-link" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a class="social-link" href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-light-subtle my-4">
+            <p class="mb-0 text-center">&copy; 2026 Makaan. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("searchBtn").addEventListener("click", function () {
+            const action = document.getElementById("buy").checked ? "buy" : "rent";
+            console.log("Searching properties:", { action });
+        });
+
+        const mainNav = document.getElementById("mainNav");
+        const navToggler = document.querySelector(".navbar-toggler");
+        const navCollapse = bootstrap.Collapse.getOrCreateInstance(mainNav, { toggle: false });
+
+        function isMobileMenuVisible() {
+            return window.getComputedStyle(navToggler).display !== "none";
+        }
+
+        document.querySelectorAll("#mainNav .nav-link, #mainNav .btn").forEach((item) => {
+            item.addEventListener("click", () => {
+                if (isMobileMenuVisible() && mainNav.classList.contains("show")) {
+                    navCollapse.hide();
+                }
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!isMobileMenuVisible() || !mainNav.classList.contains("show")) {
+                return;
+            }
+
+            const clickedInsideMenu = mainNav.contains(event.target);
+            const clickedToggler = navToggler.contains(event.target);
+            if (!clickedInsideMenu && !clickedToggler) {
+                navCollapse.hide();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>UrbanNest | Find Your Dream Home</title>
+  <!-- SEO & Meta -->
+  <meta name="description" content="Modern real estate platform — discover, buy, or rent your next home with ease.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Font Awesome 6 (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Bootstrap Icons (additional) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ----- GLOBAL & RESET ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #ffffff;
+      color: #1e1e2f;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    /* smooth scroll & spacing */
+    section {
+      padding: 80px 0;
+    }
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 0;
+      }
+    }
+
+    /* primary color palette — modern indigo/blue + clean white */
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #0f2f5e;
+      --accent: #2a7de1;
+      --soft-bg: #f8fafd;
+      --gray-light: #e9ecef;
+      --shadow-sm: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 20px 30px -10px rgba(0, 20, 50, 0.1);
+      --transition: all 0.25s ease;
+    }
+
+    /* ----- STICKY NAVBAR (transparent → solid on scroll) ----- */
+    .navbar {
+      padding: 0.8rem 0;
+      transition: var(--transition);
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+    }
+    .navbar-scrolled {
+      background-color: rgba(255, 255, 255, 0.96) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #fff !important;
+      letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
+    .navbar-scrolled .navbar-brand {
+      color: var(--primary) !important;
+    }
+    .navbar-nav .nav-link {
+      color: rgba(255,255,255,0.9) !important;
+      font-weight: 500;
+      padding: 0.5rem 1.2rem !important;
+      transition: var(--transition);
+    }
+    .navbar-scrolled .nav-link {
+      color: #1e2a41 !important;
+    }
+    .navbar-nav .nav-link:hover {
+      color: white !important;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 40px;
+    }
+    .navbar-scrolled .nav-link:hover {
+      color: var(--primary) !important;
+      background-color: rgba(26, 75, 140, 0.05);
+    }
+    .btn-post {
+      background: white;
+      color: var(--primary-dark);
+      border: none;
+      font-weight: 600;
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      transition: var(--transition);
+    }
+    .navbar-scrolled .btn-post {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px -6px rgba(26, 75, 140, 0.25);
+    }
+    .btn-post:hover {
+      background: var(--primary-dark);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .navbar-scrolled .btn-post:hover {
+      background: var(--primary-dark);
+    }
+    /* mobile menu */
+    .navbar-toggler {
+      border: none;
+      box-shadow: none;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+    .navbar-scrolled .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231a4b8c' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* ----- HERO SECTION (with overlay + glass search) ----- */
+    .hero-section {
+      min-height: 100vh;
+      background: linear-gradient(125deg, rgba(0,20,40,0.5) 0%, rgba(0,0,0,0.45) 100%), 
+                  url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=2') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: -76px; /* pull under navbar */
+      padding-top: 76px;
+    }
+    .hero-content {
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .hero-content h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+    }
+
+    /* glassmorphism search card */
+    .search-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 64px;
+      padding: 0.6rem 0.6rem 0.6rem 1.8rem;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    @media (max-width: 992px) {
+      .search-card {
+        border-radius: 40px;
+        padding: 1.2rem;
+        background: rgba(255,255,255,0.92);
+      }
+    }
+
+    /* toggle switch (Buy/Rent) */
+    .toggle-group {
+      display: flex;
+      gap: 6px;
+      background: rgba(0,0,0,0.04);
+      padding: 4px;
+      border-radius: 50px;
+    }
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #2c3e50;
+      transition: var(--transition);
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 12px -6px rgba(26,75,140,0.4);
+    }
+    .search-input-custom {
+      border: none;
+      background: transparent;
+      padding: 0.8rem 0.5rem;
+      font-weight: 500;
+      outline: none;
+      width: 100%;
+    }
+    .search-input-wrap {
+      border: 1.5px solid rgba(26, 75, 140, 0.18);
+      border-radius: 42px;
+      padding: 0.2rem 0.55rem;
+      background: rgba(255, 255, 255, 0.92);
+      transition: var(--transition);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+    .search-input-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.14), 0 8px 20px -10px rgba(26, 75, 140, 0.35);
+      transform: translateY(-1px);
+    }
+    .search-input-custom::placeholder {
+      color: #6b7a90;
+    }
+    .search-btn {
+      background: var(--primary);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 10px 20px -8px var(--primary);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .search-btn:hover {
+      background: var(--primary-dark);
+      transform: scale(1.02);
+    }
+
+    /* ----- FEATURED PROPERTIES CARDS ----- */
+    .property-card {
+      border: none;
+      border-radius: 24px;
+      background: white;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      overflow: hidden;
+      height: 100%;
+    }
+    .property-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 40px -15px rgba(26, 75, 140, 0.15);
+    }
+    .property-img {
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .property-card:hover .property-img {
+      transform: scale(1.03);
+    }
+    .price-tag {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .featured-carousel {
+      position: relative;
+      padding: 0 2.2rem;
+    }
+    .featured-carousel .carousel-item {
+      padding: 0.2rem 0;
+    }
+    .featured-carousel .carousel-indicators {
+      position: static;
+      margin-top: 1.5rem;
+      margin-bottom: 0;
+    }
+    .featured-carousel .carousel-indicators [data-bs-target] {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 0;
+      background-color: rgba(26, 75, 140, 0.3);
+    }
+    .featured-carousel .carousel-indicators .active {
+      background-color: var(--primary);
+    }
+    .featured-carousel .carousel-control-prev,
+    .featured-carousel .carousel-control-next {
+      width: 44px;
+      height: 44px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 10px 20px -10px rgba(26, 75, 140, 0.45);
+      opacity: 1;
+    }
+    .featured-carousel .carousel-control-prev {
+      left: -0.25rem;
+    }
+    .featured-carousel .carousel-control-next {
+      right: -0.25rem;
+    }
+    .featured-carousel .carousel-control-prev-icon,
+    .featured-carousel .carousel-control-next-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      background-size: 100% 100%;
+      filter: invert(21%) sepia(35%) saturate(1339%) hue-rotate(186deg) brightness(95%) contrast(97%);
+      background-color: transparent;
+      padding: 0;
+    }
+    @media (max-width: 991.98px) {
+      .featured-carousel {
+        padding: 0;
+      }
+      .featured-carousel .carousel-control-prev,
+      .featured-carousel .carousel-control-next {
+        display: none;
+      }
+    }
+
+    /* ----- WHY CHOOSE US ICON BOXES ----- */
+    .feature-box {
+      background: white;
+      border-radius: 32px;
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      height: 100%;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .feature-box:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .icon-circle {
+      width: 70px;
+      height: 70px;
+      background: rgba(26, 75, 140, 0.08);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 2.2rem;
+    }
+
+    /* ----- TESTIMONIAL CAROUSEL ----- */
+    .testimonial-card {
+      background: white;
+      border-radius: 40px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-md);
+      margin: 0 10px;
+    }
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+      background-color: var(--primary);
+      border-radius: 50%;
+      padding: 20px;
+    }
+
+    /* ----- CTA SECTION ----- */
+    .cta-section {
+      background: linear-gradient(105deg, #0b2b4f 0%, #1a4b8c 100%);
+      border-radius: 60px;
+      margin: 40px 0;
+      color: white;
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      background: #0c1a2b;
+      color: #cfddee;
+    }
+    .footer a {
+      color: #b6cae0;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .footer a:hover {
+      color: white;
+    }
+    .social-icon {
+      font-size: 1.5rem;
+      margin-right: 1.2rem;
+      color: #a0bbd8;
+    }
+
+    /* additional utils */
+    .bg-soft {
+      background-color: var(--soft-bg);
+    }
+    .text-primary-dark {
+      color: var(--primary-dark);
+    }
+    .btn-outline-light-custom {
+      border: 1.5px solid white;
+      color: white;
+      border-radius: 60px;
+      padding: 12px 36px;
+      font-weight: 600;
+    }
+    .btn-outline-light-custom:hover {
+      background: white;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HEADER / NAVBAR (sticky, scroll effect) ==================== -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-building me-2"></i>UrbanNest
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-medium">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Buy</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Rent</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sell</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+      <a href="#" class="btn btn-post shadow-sm">
+        <i class="fas fa-plus-circle me-2"></i>Post Property
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO SECTION (top priority) ==================== -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center" style="min-height: 90vh;">
+      <div class="col-lg-10 col-xl-9 mx-auto text-center hero-content">
+        <h1 class="display-3 fw-bold mb-3">Find Your Dream Home</h1>
+        <p class="lead mb-5 fs-4 opacity-90">Discover the perfect place — tailored to your lifestyle.</p>
+        
+        <!-- Advanced Search Bar (glass + toggle) -->
+        <div class="search-card mx-auto">
+          <div class="row g-2 align-items-center">
+            <!-- Location -->
+            <div class="col-12 col-md-5 col-lg-3">
+              <div class="search-input-wrap d-flex align-items-center ps-2">
+                <i class="fas fa-map-pin me-2" style="color: var(--primary);"></i>
+                <input type="text" class="search-input-custom" placeholder="City, neighborhood, or ZIP" value="Pune, MH">
+              </div>
+            </div>
+            <!-- Buy / Rent Toggle -->
+            <div class="col-6 col-md-3 col-lg-3">
+              <div class="toggle-group justify-content-around">
+                <button class="toggle-btn active" id="toggleBuy">Buy</button>
+                <button class="toggle-btn" id="toggleRent">Rent</button>
+              </div>
+            </div>
+            <!-- Budget dropdown -->
+            <div class="col-6 col-md-4 col-lg-3">
+              <select class="form-select border-0 bg-transparent fw-semibold" style="padding: 0.8rem 0.2rem;">
+                <option selected>Any Budget</option>
+                <option>$100k - $300k</option>
+                <option>$300k - $600k</option>
+                <option>$600k - $1M</option>
+                <option>$1M+</option>
+              </select>
+            </div>
+            <!-- Search CTA -->
+            <div class="col-12 col-md-12 col-lg-3 mt-2 mt-lg-0 text-lg-end">
+              <button class="search-btn w-100 w-lg-auto"><i class="fas fa-search me-2"></i>Search</button>
+            </div>
+          </div>
+        </div>
+        <!-- small trust badge (optional) -->
+        <div class="mt-4 text-white-50 small">
+          <i class="fas fa-shield-alt me-1"></i> Trusted by 5,000+ families
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FEATURED PROPERTIES (6 cards) ==================== -->
+<section class="bg-soft">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-8 mx-auto text-center">
+        <!--<span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill mb-3">handpicked</span>-->
+        <h2 class="display-6 fw-bold">Featured Properties</h2>
+        <p class="text-secondary">Explore our top listings — from modern apartments to luxury villas.</p>
+      </div>
+    </div>
+    <div id="featuredCarousel" class="carousel slide featured-carousel mb-3" data-bs-ride="carousel">
+      <div class="carousel-indicators d-none">
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/1643389/pexels-photo-1643389.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="price-tag">$749,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Sunset Villa</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Beverly Hills, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3 mt-1">
+                    <span><i class="fas fa-bed me-1"></i> 4 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 3 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 2,450 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$2,350/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Marina Loft</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Santa Monica, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 2 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,120 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between  align-items-center">
+                    <span class="price-tag">$1,195,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Oakwood Residence</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Pasadena, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 5 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 4 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 3,800 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="row g-4">
+            <!-- Card 4 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center"> ">
+                    <span class="price-tag">$3,200/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">The Metropolitan</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Downtown LA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 3 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,650 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$589,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Garden Grove Bungalow</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Orange County, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 3 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,980 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between  align-items-center ">
+                    <span class="price-tag">$4,500/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Skyline Penthouse</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Century City</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 2 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2.5 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,900 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+        <div id="featuredCarousel" class="carousel slide featured-carousel" data-bs-ride="carousel">
+      <div class="carousel-indicators d-none">
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/1643389/pexels-photo-1643389.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="price-tag">$749,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Sunset Villa</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Beverly Hills, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3 mt-1">
+                    <span><i class="fas fa-bed me-1"></i> 4 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 3 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 2,450 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center"> ">
+                    <span class="price-tag">$2,350/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Marina Loft</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Santa Monica, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 2 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,120 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$1,195,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Oakwood Residence</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Pasadena, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 5 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 4 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 3,800 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="row g-4">
+            <!-- Card 4 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$3,200/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">The Metropolitan</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Downtown LA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 3 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,650 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$589,000</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1">For Sale</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Garden Grove Bungalow</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Orange County, CA</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 3 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,980 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="property-card card p-3">
+                <img src="https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=600" class="property-img rounded-4" alt="Property">
+                <div class="card-body px-2 pt-3">
+                  <div class="d-flex justify-content-between align-items-center ">
+                    <span class="price-tag">$4,500/mo</span>
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-1">For Rent</span>
+                  </div>
+                  <h5 class="mt-2 fw-semibold">Skyline Penthouse</h5>
+                  <p class="text-secondary mb-2"><i class="fas fa-location-dot me-1"></i> Century City</p>
+                  <div class="d-flex gap-4 text-secondary border-top pt-3">
+                    <span><i class="fas fa-bed me-1"></i> 2 Beds</span>
+                    <span><i class="fas fa-bath me-1"></i> 2.5 Baths</span>
+                    <span><i class="fas fa-vector-square me-1"></i> 1,900 sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHY CHOOSE US (4 features) ==================== -->
+<section>
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Why choose UrbanNest</h2>
+      <p class="text-secondary">We deliver an effortless real estate experience</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="feature-box text-center text-lg-start">
+          <div class="icon-circle mx-auto mx-lg-0">
+            <i class="fas fa-shield-hal"></i>
+          </div>
+          <h4 class="fw-semibold">Verified listings</h4>
+          <p class="text-secondary">Every property is personally vetted by our team.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="feature-box text-center text-lg-start">
+          <div class="icon-circle mx-auto mx-lg-0">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h4 class="fw-semibold">Market insights</h4>
+          <p class="text-secondary">Real-time pricing & neighborhood analytics.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="feature-box text-center text-lg-start">
+          <div class="icon-circle mx-auto mx-lg-0">
+            <i class="fas fa-hand-holding-heart"></i>
+          </div>
+          <h4 class="fw-semibold">Dedicated support</h4>
+          <p class="text-secondary">Agents available 7 days a week.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="feature-box text-center text-lg-start">
+          <div class="icon-circle mx-auto mx-lg-0">
+            <i class="fas fa-mobile-screen"></i>
+          </div>
+          <h4 class="fw-semibold">Seamless process</h4>
+          <p class="text-secondary">From search to keys, fully digital.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TESTIMONIALS (carousel) ==================== -->
+<section class="bg-soft">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">What our clients say</h2>
+    </div>
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+              <div class="testimonial-card text-center">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="client" class="rounded-circle mb-3" width="80" height="80" style="object-fit:cover; border:3px solid var(--primary)">
+                <p class="fs-5 fst-italic">"UrbanNest made buying our first home stress-free. The search filters are amazing!"</p>
+                <h5 class="mt-3 fw-bold">— Sophia Reed</h5>
+                <span class="text-secondary">Homeowner, Austin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+              <div class="testimonial-card text-center">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="client" class="rounded-circle mb-3" width="80" height="80" style="object-fit:cover; border:3px solid var(--primary)">
+                <p class="fs-5 fst-italic">"Sold my condo in 8 days! Their platform brought serious buyers."</p>
+                <h5 class="mt-3 fw-bold">— Marcus Chen</h5>
+                <span class="text-secondary">Seller, San Diego</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+              <div class="testimonial-card text-center">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="client" class="rounded-circle mb-3" width="80" height="80" style="object-fit:cover; border:3px solid var(--primary)">
+                <p class="fs-5 fst-italic">"Rented a beautiful loft in 2 days. The interface is intuitive and modern."</p>
+                <h5 class="mt-3 fw-bold">— Elena Vasquez</h5>
+                <span class="text-secondary">Renter, Miami</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- carousel controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CALL-TO-ACTION SECTION ==================== -->
+<section>
+  <div class="container">
+    <div class="cta-section p-5 p-md-5 text-center">
+      <h2 class="display-5 fw-bold mb-3">Ready to find your perfect place?</h2>
+      <p class="lead mb-4 opacity-75">Join thousands of happy homeowners and renters.</p>
+      <a href="#" class="btn btn-outline-light-custom btn-lg px-5 py-3">
+        Explore Properties <i class="fas fa-arrow-right ms-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer pt-5 pb-4">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-md-5">
+        <h4 class="text-white fw-bold"><i class="fas fa-building me-2"></i>UrbanNest</h4>
+        <p class="mt-3" style="color:#b0c7e0;">Your trusted partner in real estate. We make finding a home simple and enjoyable.</p>
+        <div class="mt-3">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="col-md-2 col-6">
+        <h5 class="text-white">Quick links</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="#">Home</a></li>
+          <li class="mb-2"><a href="#">Buy</a></li>
+          <li class="mb-2"><a href="#">Rent</a></li>
+          <li class="mb-2"><a href="#">Sell</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2 col-6">
+        <h5 class="text-white">Support</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="#">Contact</a></li>
+          <li class="mb-2"><a href="#">FAQ</a></li>
+          <li class="mb-2"><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5 class="text-white">Contact info</h5>
+        <p><i class="fas fa-map-pin me-2"></i> 123 Real Estate Ave, Pune, MH</p>
+        <p><i class="fas fa-phone me-2"></i> +91 7038249592</p>
+        <p><i class="fas fa-envelope me-2"></i> RE@urbannest.com</p>
+      </div>
+    </div>
+    <hr class="opacity-25 mt-4">
+    <div class="text-center small" style="color:#8da4c4;">© 2026 UrbanNest. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS + Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Custom JavaScript (sticky navbar + toggle active) -->
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- STICKY NAVBAR (transparent -> solid on scroll) ----------
+    const navbar = document.getElementById('mainNavbar');
+    function handleScroll() {
+      if (window.scrollY > 20) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+    }
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // initial check
+
+    // ---------- BUY / RENT TOGGLE (UI interaction) ----------
+    const toggleBuy = document.getElementById('toggleBuy');
+    const toggleRent = document.getElementById('toggleRent');
+    
+    function setActiveToggle(activeBtn, inactiveBtn) {
+      activeBtn.classList.add('active');
+      inactiveBtn.classList.remove('active');
+    }
+    
+    if (toggleBuy && toggleRent) {
+      toggleBuy.addEventListener('click', function(e) {
+        e.preventDefault();
+        setActiveToggle(toggleBuy, toggleRent);
+      });
+      toggleRent.addEventListener('click', function(e) {
+        e.preventDefault();
+        setActiveToggle(toggleRent, toggleBuy);
+      });
+    }
+
+    // ---------- FEATURED PROPERTIES SLIDER ----------
+    const featuredCarouselEl = document.getElementById('featuredCarousel');
+    if (featuredCarouselEl) {
+      new bootstrap.Carousel(featuredCarouselEl, {
+        interval: 3800,
+        ride: 'carousel',
+        pause: 'hover',
+        wrap: true,
+        touch: true
+      });
+    }
+
+    // (Optional) smooth appearance for carousel - already Bootstrap
+
+    // Simulate search button interaction (non-functional but polished)
+    const searchBtn = document.querySelector('.search-btn');
+    if(searchBtn) {
+      searchBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        // just a micro-interaction
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching';
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-search me-2"></i>Search';
+        }, 800);
+      });
+    }
+    
+    // "Explore Properties" button feedback
+    const ctaBtn = document.querySelector('.btn-outline-light-custom');
+    if(ctaBtn) {
+      ctaBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 600, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
+<!-- ensure all sections are clearly commented and structured -->
+</body>
+</html>
